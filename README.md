@@ -1,6 +1,5 @@
-# DynamicDoc
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+# 📄 DynamicDoc
+Aplicación en Angular 19.0.7 que permite rellenar dinámicamente una plantilla de texto a medida que el usuario completa un formulario. Ideal para generar documentos predefinidos con datos personalizados en tiempo real.
 
 ## Development server
 
