@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-//import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-const pdfFonts = require('./vfs_fonts.js');
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+//const pdfFonts = require('./vfs_fonts.js');
 
 (<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
-const fonts = {
+/* const fonts = {
   Poppins:{
     //thin: 'Poppins-Thin.ttf',                    // 100
     //extra_light: 'Poppins-ExtraLight.ttf',       // 200
@@ -23,7 +23,7 @@ const fonts = {
     bold: 'Roboto-Medium.ttf',
     bolditalics: 'Roboto-SemiBold.ttf'
   }
-}
+} */
 
 @Injectable({
   providedIn: 'root'
@@ -35,13 +35,15 @@ export class PdfGeneratorService {
   // Método para generar el PDF y descargarlo
   generatePdf(template: any, data: any) {
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition, undefined, fonts).download('generated-document.pdf');
+    //pdfMake.createPdf(documentDefinition, undefined, fonts).download('generated-document.pdf');
+    pdfMake.createPdf(documentDefinition).download('generated-document.pdf');
   }
 
   // Método para generar el PDF y previsualizarlo en una nueva pestaña
   previewPdf(template: any, data: any) {
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition, undefined, fonts).open();
+    //pdfMake.createPdf(documentDefinition, undefined, fonts).open();
+    pdfMake.createPdf(documentDefinition).open();
   }
 
   // Método para generar el PDF y enviarlo a la impresora
@@ -56,7 +58,7 @@ export class PdfGeneratorService {
     return {
       header: {
         columns: [
-          { text: "Evento de Innovación - Hackathon 2025", alignment: 'right', fontSize: 10, italics: true, margin: [20, 20] }
+          { text: "Evento de Innovación - Hackathon 2025", alignment: 'right', fontSize: 10, margin: [20, 20] }
         ]
       },
       footer: function (currentPage: number, pageCount: number) {
@@ -65,7 +67,7 @@ export class PdfGeneratorService {
             { text: '\n' }, // Agregamos dos saltos de línea para empujar el contenido hacia abajo
             {
               columns: [
-                { text: `Elaborado por Minkaspr`, alignment: 'left', fontSize: 10, italics: true },
+                { text: `Elaborado por Minkaspr`, alignment: 'left', fontSize: 10 },
                 { text: `Página ${currentPage} de ${pageCount}`, alignment: 'right', fontSize: 10 }
               ],
               margin: [20,0,20,0]
@@ -77,24 +79,22 @@ export class PdfGeneratorService {
       pageSize: 'A4', // Tamaño A4, A5, etc.
       pageOrientation: 'portrait', // Puede ser 'portrait' o 'landscape'
       pageMargins: [40, 60, 40, 40],
-      defaultStyle: {
+      /* defaultStyle: {
         font: 'Roboto'  // Fuente predeterminada
-      },
+      }, */
       styles: {
         h1: {
-          font: 'Poppins',   
+          //font: 'Poppins',   
           fontSize: 16,   
           bold: true,
-          italics: true,
         },
         h2: {
-          font: 'Roboto',    
+          //font: 'Roboto',    
           fontSize: 14,     
           bold: true,
-          italics: true,
         },
         h3: {
-          font: 'Roboto',    
+          //font: 'Roboto',    
           fontSize: 13,   
           bold: true,
         }
