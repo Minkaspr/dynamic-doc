@@ -3,6 +3,8 @@ import localEs from '@angular/common/locales/es';
 import { LOCALE_ID, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl, AbstractControl } from '@angular/forms';
+import { PdfGeneratorService } from './pdf-make/pdf-generator.service';
+import { invoiceTemplate } from './pdf-make/template'
 
 @Component({
   selector: 'app-root',
@@ -153,7 +155,7 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  constructor(private fb: FormBuilder, private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder, private datePipe: DatePipe, private pdfService: PdfGeneratorService) {
     this.initializeForm();
     registerLocaleData(localEs);
     this.setTodaysDate();
@@ -435,5 +437,38 @@ export class AppComponent implements OnInit {
    */
   formatTime(time: string | null): string {
     return time ? this.datePipe.transform(`1970-01-01T${time}`, 'h:mm a') || '' : '';
+  }
+
+  generateInvoice() {
+    const formData = this.DataForm.getRawValue();
+
+    const invoiceData = {
+
+      fechaHoy: this.todaysDate,
+      nombreEvento: formData.nombreEvento,
+      lugarEvento: formData.lugarEvento,
+      fechaInicioEvento: this.formatDate(formData.fechaInicioEvento),
+      fechaFinEvento: formData.mismoDia ? 'mismo dia' : this.formatDate(formData.fechaFinEvento),
+      horaInicioEvento: this.formatTime(formData.horaInicioEvento),
+      horaFinEvento: this.formatTime(formData.horaFinEvento),
+      duracionEvento: this.totalEventDuration,
+      modalidadEvento: formData.modalidadEvento,
+      auspiciadoPor: formData.auspiciadoPor,
+
+      participante: {
+        nombre: formData.nombre,
+        documento: formData.documento,
+        numeroDocumento: formData.numeroDocumento,
+        universidad: formData.universidad || '', // Opcional
+        cicloActual: formData.cicloActual || '', // Opcional
+        email: formData.email,
+        telefono: formData.telefono,
+        nacionalidad: formData.nacionalidad,
+        direccion: formData.direccion
+      }
+    };
+
+    console.log(invoiceData);
+    this.pdfService.previewPdf(invoiceTemplate, invoiceData);
   }
 }
