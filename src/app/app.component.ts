@@ -439,6 +439,13 @@ export class AppComponent implements OnInit {
     return time ? this.datePipe.transform(`1970-01-01T${time}`, 'h:mm a') || '' : '';
   }
 
+  /**
+   * Genera los datos de la factura a partir del formulario y los envía al servicio de generación de PDF.
+   * - Formatea las fechas y horas según el formato especificado.
+   * - Recoge y organiza los datos del formulario en un objeto `invoiceData`.
+   * - Llama al servicio `pdfService` para previsualizar el PDF con la plantilla y los datos de la factura.
+   * 
+   */
   generateInvoice() {
     const formData = this.DataForm.getRawValue();
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 //import * as pdfFonts from 'pdfmake/build/vfs_fonts'; 
-const pdfFonts = require('./vfs_fonts.js');
+/* const pdfFonts = require('./vfs_fonts.js');
 
 (<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
@@ -23,31 +23,53 @@ const fonts = {
     bold: 'Roboto-Medium.ttf',
     bolditalics: 'Roboto-SemiBold.ttf'
   }
-}
+} */
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfGeneratorService {
 
-  constructor() { }
+  constructor() {
+    this.loadFonts();
+  }
+
+  // Cargar fuentes desde URLs
+  private loadFonts() {
+    pdfMake.fonts = {
+      Poppins: {
+        normal: './Poppins-Regular.ttf',
+        italics: './Poppins-Light.ttf',
+        bold: './Poppins-SemiBold.ttf',  
+        bolditalics: './Poppins-Bold.ttf',
+      },
+      Roboto: {
+        normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+        bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+        italics: './Roboto-Light.ttf',
+        bolditalics: './Roboto-SemiBold.ttf',
+      }
+    };
+  }
 
   // Método para generar el PDF y descargarlo
   generatePdf(template: any, data: any) {
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition, undefined, fonts).download('generated-document.pdf');
+    //pdfMake.createPdf(documentDefinition, undefined, fonts).download('generated-document.pdf');
+    pdfMake.createPdf(documentDefinition).download('generated-document.pdf');
   }
 
-  // Método para generar el PDF y previsualizarlo
+  // Método para generar el PDF y previsualizarlo en una nueva pestaña
   previewPdf(template: any, data: any) {
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition, undefined, fonts).open(); // Abre en una nueva pestaña
+    //pdfMake.createPdf(documentDefinition, undefined, fonts).open();
+    pdfMake.createPdf(documentDefinition).open();
   }
 
   // Método para generar el PDF y enviarlo a la impresora
   printPdf(template: any, data: any) {
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition).print(); // Envia directamente a la impresora
+    pdfMake.createPdf(documentDefinition).print(); 
   }
 
   // Para manejar diferentes plantillas y formateos
