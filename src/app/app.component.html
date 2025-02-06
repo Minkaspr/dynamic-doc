@@ -67,9 +67,10 @@
               class="cursor-pointer px-3 py-2 text-sm/6 font-semibold text-gray-900">
               Anterior
             </button>
+            <!-- nextStep -->
             @if (currentGroup < formGroups.length - 1 || currentFieldIndex < formGroups[currentGroup].fields.length - 1)
             { 
-              <button type="submit" (click)="nextStep()" [disabled]="!isValidCurrentField()"
+              <button type="submit" (click)="generateInvoice()" [disabled]="!isValidCurrentField()"
                 class="cursor-pointer disabled:opacity-50 bg-sky-700 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs">
                 Siguiente
               </button>
