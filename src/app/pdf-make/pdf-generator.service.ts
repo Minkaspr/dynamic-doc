@@ -54,11 +54,14 @@ export class PdfGeneratorService {
   }
 
   private async loadPdfMake() {
-    const pdfMake = await import('pdfmake/build/pdfmake'); 
+    const pdfMakeModule = await import('pdfmake/build/pdfmake'); 
     const pdfFonts = await import('pdfmake/build/vfs_fonts');
-
-    (<any>pdfMake).addVirtualFileSystem(pdfFonts);
-    return pdfMake.default || pdfMake;
+    if ((<any>pdfFonts).pdfMake) {
+      (<any>pdfMakeModule).vfs = (<any>pdfFonts).pdfMake.vfs;
+    }
+    return pdfMakeModule.default || pdfMakeModule;
+    //(<any>pdfMake).addVirtualFileSystem(pdfFonts);
+    //return pdfMake.default || pdfMake;
   }
 
   // Para manejar diferentes plantillas y formateos
