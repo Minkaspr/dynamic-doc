@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+//import * as pdfMake from 'pdfmake/build/pdfmake';
+//import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 //const pdfFonts = require('./vfs_fonts.js');
 
-(<any>pdfMake).addVirtualFileSystem(pdfFonts);
+//(<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
 /* const fonts = {
   Poppins:{
@@ -33,23 +33,32 @@ export class PdfGeneratorService {
   constructor() {  }
 
   // Método para generar el PDF y descargarlo
-  generatePdf(template: any, data: any) {
+  async generatePdf(template: any, data: any) {
+    const pdfMake = await this.loadPdfMake();
     const documentDefinition = this.prepareDocument(template, data);
-    //pdfMake.createPdf(documentDefinition, undefined, fonts).download('generated-document.pdf');
     pdfMake.createPdf(documentDefinition).download('generated-document.pdf');
   }
 
   // Método para generar el PDF y previsualizarlo en una nueva pestaña
-  previewPdf(template: any, data: any) {
+  async previewPdf(template: any, data: any) {
+    const pdfMake = await this.loadPdfMake();
     const documentDefinition = this.prepareDocument(template, data);
-    //pdfMake.createPdf(documentDefinition, undefined, fonts).open();
     pdfMake.createPdf(documentDefinition).open();
   }
 
   // Método para generar el PDF y enviarlo a la impresora
-  printPdf(template: any, data: any) {
+  async printPdf(template: any, data: any) {
+    const pdfMake = await this.loadPdfMake();
     const documentDefinition = this.prepareDocument(template, data);
-    pdfMake.createPdf(documentDefinition).print(); 
+    pdfMake.createPdf(documentDefinition).print();
+  }
+
+  private async loadPdfMake() {
+    const pdfMake = await import('pdfmake/build/pdfmake'); 
+    const pdfFonts = await import('pdfmake/build/vfs_fonts');
+
+    (<any>pdfMake).addVirtualFileSystem(pdfFonts);
+    return pdfMake.default || pdfMake;
   }
 
   // Para manejar diferentes plantillas y formateos
