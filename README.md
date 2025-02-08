@@ -16,4 +16,4 @@ Aplicación en Angular 19.0.7 que permite rellenar dinámicamente una plantilla 
 - pdfMake (para generación de PDFs con fuentes personalizadas)
 
 ## Captura de Pantalla
-![Captura de Pantalla](public/cap-website.png)
+![Captura de Pantalla](public/cap_website.png)
