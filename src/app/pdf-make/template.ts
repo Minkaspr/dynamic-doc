@@ -92,12 +92,12 @@ export function invoiceTemplate(data: any): any {
         widths: ['50%', '50%'], // Ambas columnas tienen el mismo ancho
         body: [
           [
-            { text: 'Firma del Participante:', alignment: 'right', margin: [0, 20, 0, 10] },
-            { text: '__________________________', alignment: 'left', margin: [0, 20, 0, 10] }
+            { text: 'Firma del Participante:', alignment: 'right', margin: [0, 15, 0, 10] },
+            { text: '__________________________', alignment: 'left', margin: [0, 15, 0, 10] }
           ],
           [
-            { text: 'Fecha de Firma:', alignment: 'right', margin: [0, 5, 0, 20] },
-            { text: '___ / ___ / ______', alignment: 'left', margin: [0, 5, 0, 20] }
+            { text: 'Fecha de Firma:', alignment: 'right', margin: [0, 5, 0, 0] },
+            { text: '___ / ___ / ______', alignment: 'left', margin: [0, 5, 0, 0] }
           ]
         ]
       },

@@ -30,7 +30,7 @@ import { Injectable } from '@angular/core';
 })
 export class PdfGeneratorService {
 
-  constructor() {  }
+  constructor() { }
 
   // Método para generar el PDF y descargarlo
   async generatePdf(template: any, data: any) {
@@ -54,7 +54,7 @@ export class PdfGeneratorService {
   }
 
   private async loadPdfMake() {
-    const pdfMakeModule = await import('pdfmake/build/pdfmake'); 
+    const pdfMakeModule = await import('pdfmake/build/pdfmake');
     const pdfFonts = await import('pdfmake/build/vfs_fonts');
     if ((<any>pdfFonts).pdfMake) {
       (<any>pdfMakeModule).vfs = (<any>pdfFonts).pdfMake.vfs;
@@ -82,7 +82,7 @@ export class PdfGeneratorService {
                 { text: `Elaborado por Minkaspr`, alignment: 'left', fontSize: 10 },
                 { text: `Página ${currentPage} de ${pageCount}`, alignment: 'right', fontSize: 10 }
               ],
-              margin: [20,0,20,0]
+              margin: [20, 0, 20, 0]
             }
           ]
         };
@@ -97,17 +97,17 @@ export class PdfGeneratorService {
       styles: {
         h1: {
           //font: 'Poppins',   
-          fontSize: 16,   
+          fontSize: 16,
           bold: true,
         },
         h2: {
           //font: 'Roboto',    
-          fontSize: 14,     
+          fontSize: 14,
           bold: true,
         },
         h3: {
           //font: 'Roboto',    
-          fontSize: 13,   
+          fontSize: 13,
           bold: true,
         }
       }
